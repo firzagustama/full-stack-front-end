@@ -1,0 +1,93 @@
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{currOperation}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" ng-model="name" placeholder="PT. Aliansi Teknologi">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Address</label>
+                        <input type="text" class="form-control" id="address" ng-model="address" placeholder="Setiabudi One">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Phone Number</label>
+                        <input type="text" class="form-control" id="phoneNumber" ng-model="phoneNumber" placeholder="15000">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="save()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete confimation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalTitle">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="remove()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Modal-->
+<div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-dark mb-2" data-toggle="modal" data-target="#modal" ng-click="showModal('Add')">
+        <i class="bi bi-plus-circle"></i>
+        Company
+    </button>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="company in companies">
+        <td>{{$index + 1}}</td>
+        <td>{{company.id}}</td>
+        <td>{{company.name}}</td>
+        <td>{{company.address}}</td>
+        <td>{{company.phoneNumber}}</td>
+        <td>
+            <a class="edit" data-toggle="modal" data-target="#modal" ng-click="update('Update', company)"><i class="bi bi-pencil-square" style="color: #FFC107"></i></a>
+            <span class="delete" data-toggle="modal" data-target="#deleteModal" ng-click="updateDeleteId(company.id)"><i class="bi bi-trash" style="color: #F44336"></i></span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<nav aria-label="Page navigation example" ng-init="currentPage = 1" ng-init="totalPage = 1">
+    <ul class="pagination justify-content-end">
+        <li class="page-item ng-class: currentPage == 1 ? 'disabled' : '';">
+            <a class="page-link" ng-click="previousPage()">Previous</a>
+        </li>
+        <li ng-repeat="x in [].constructor(totalPage) track by $index" class="page-item ng-class: currentPage == $index + 1 ? 'disabled' : '';" ng-click="goToPage($index + 1)"><a class="page-link">{{$index+1}}</a></li>
+        <li class="page-item ng-class: currentPage >= totalPage ? 'disabled' : '';">
+            <a class="page-link" ng-click="nextPage()">Next</a>
+        </li>
+    </ul>
+</nav>
